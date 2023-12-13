@@ -173,8 +173,8 @@ def main():
 
             # Aggregate sentiment overview
             st.write("Sentiment Overview:")
-            st.table(results_df.style.set_table_styles(
-                [{'selector': 'thead th', 'props': [('background-color', '#87CEEB')]}]))
+            st.table(results_df.style.set_table_styles([{'selector': 'thead th', 'props': [('background-color', '#87CEEB')]}]))
+            st.line_chart(results_df['Probability'])
 
 
 if __name__ == '__main__':
