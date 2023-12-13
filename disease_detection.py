@@ -8,6 +8,8 @@ from sklearn.model_selection import train_test_split
 from nltk import word_tokenize, WordNetLemmatizer
 import nltk
 nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('wordnet')
 import torch
 from transformers import BertTokenizer, BertModel
 from sklearn.preprocessing import StandardScaler
