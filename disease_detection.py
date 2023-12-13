@@ -65,7 +65,7 @@ def preprocess_text(user_input):
 #############################
 # feature extraction
 #############################
-@st.cache()
+@st.cache_resource()
 def extract_features(user_input):
     embeddings = []
 
@@ -120,7 +120,7 @@ def color_probability(val):
     """Applying color to the "Probability" column"""
     return f'background-color: #5fba7d '
 
-@st.cache()
+@st.cache_resource()
 def model_loading():
     """"Loading the model using TensorFlow's load_model"""
     loaded_model = tf.keras.models.load_model('neural_network_model.h5')
