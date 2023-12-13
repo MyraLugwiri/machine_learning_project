@@ -65,6 +65,7 @@ def preprocess_text(user_input):
 #############################
 # feature extraction
 #############################
+@st.cache()
 def extract_features(user_input):
     embeddings = []
 
@@ -119,15 +120,20 @@ def color_probability(val):
     """Applying color to the "Probability" column"""
     return f'background-color: #5fba7d '
 
+@st.cache()
+def model_loading():
+    """"Loading the model using TensorFlow's load_model"""
+    loaded_model = tf.keras.models.load_model('neural_network_model.h5')
+    return loaded_model
+
 
 #############################
 # creating the Streamlit app
 #############################
 
 def main():
-    # Loading the model using TensorFlow's load_model
-    loaded_model = tf.keras.models.load_model('neural_network_model.h5')
-    model = loaded_model
+    # Loading the model
+    model = model_loading()
 
     # loading the label encoder
     labelling = joblib.load('label_encoder.h5')
