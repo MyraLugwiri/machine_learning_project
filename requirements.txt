@@ -1,0 +1,11 @@
+streamlit
+nltk
+inflect
+transformers
+tensorflow
+scikit-learn
+numpy
+pandas
+joblib
+Pillow
+torch
