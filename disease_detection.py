@@ -110,6 +110,11 @@ def extract_features(user_input):
     return embeddings
 
 
+def color_probability(val):
+    """Applying color to the "Probability" column"""
+    return f'background-color: #5fba7d '
+
+
 #############################
 # creating the Streamlit app
 #############################
@@ -127,6 +132,7 @@ def main():
     # Streamlit App
     st.title("Sentiment Analysis for Infectious Disease Detection in Sub-Saharan Africa")
     st.image(image, caption='Infectious Disease', width=550)
+    st.write('You can enter one statement or multiple text statements')
 
     # Text input for user to enter data
     user_inputs = st.text_area("Enter multiple texts (one per line):", height=200).split('\n')
@@ -134,7 +140,9 @@ def main():
     if st.button('Analyse Sentiment'):
 
         # Preprocess and extract features for each entered text
-        if user_inputs:
+        if not user_inputs[0]:
+            st.warning('Please enter text before you proceed!')
+        else:
             processed_inputs = [preprocess_text(text) for text in user_inputs]
             # features_list = [extract_features(text) for text in processed_inputs]
             features_list = extract_features(processed_inputs)
@@ -145,12 +153,10 @@ def main():
             # Making predictions for each text
             predictions_list = [model.predict(np.array([features])) for features in features_list]
 
-            # Inverse transform the predicted labels to get the original class labels
+            # Inverse transforming the predicted labels to get the original class labels
             predicted_labels = labelling.inverse_transform([np.argmax(predictions) for predictions in predictions_list])
 
-            # Displaying sentiment analysis results for each text
-            st.write("Sentiment Analysis Results:")
-            # Initialize an empty DataFrame
+            # Initializing an empty DataFrame
             results_df = pd.DataFrame(columns=["Text", "Sentiment Class", "Probability"])
 
             # Inside the loop
@@ -163,7 +169,8 @@ def main():
 
             # Aggregate sentiment overview
             st.write("Sentiment Overview:")
-            st.write(results_df)
+            st.table(results_df.style.set_table_styles(
+                [{'selector': 'thead th', 'props': [('background-color', '#87CEEB')]}]))
 
 
 if __name__ == '__main__':
