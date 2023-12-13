@@ -19,6 +19,7 @@ import pandas as pd
 from PIL import Image
 import joblib
 from transformers import pipeline
+import altair as alt
 
 # Tokenization of the input text
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
@@ -174,7 +175,19 @@ def main():
             # Aggregate sentiment overview
             st.write("Sentiment Overview:")
             st.table(results_df.style.set_table_styles([{'selector': 'thead th', 'props': [('background-color', '#87CEEB')]}]))
-            st.line_chart(results_df['Probability'])
+            # st.write("Trend Line of Probabilities:")
+            chart_data = results_df[["Sentiment Class", "Probability"]]
+            chart_data = chart_data.rename(columns={"Text": "Sentiment Class"})
+            chart = alt.Chart(chart_data).mark_line().encode(
+                x="Sentiment Class",
+                y="Probability",
+                tooltip=["Sentiment Class", "Probability"]
+            ).properties(
+                title="Trend Line of Probabilities",
+                width=600,
+                height=300
+            )
+            st.altair_chart(chart)
 
 
 if __name__ == '__main__':
