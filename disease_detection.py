@@ -120,7 +120,7 @@ def color_probability(val):
 #############################
 # creating the Streamlit app
 #############################
-
+@st.experimental_memo
 def main():
     # Loading the model using TensorFlow's load_model
     loaded_model = tf.keras.models.load_model('neural_network_model.h5')
