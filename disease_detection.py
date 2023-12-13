@@ -6,6 +6,8 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout
 from sklearn.model_selection import train_test_split
 from nltk import word_tokenize, WordNetLemmatizer
+import nltk
+nltk.download('punkt')
 import torch
 from transformers import BertTokenizer, BertModel
 from sklearn.preprocessing import StandardScaler
